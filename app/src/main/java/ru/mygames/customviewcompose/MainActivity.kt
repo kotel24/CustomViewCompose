@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import ru.mygames.customviewcompose.samples.CanvasTest
 import ru.mygames.customviewcompose.ui.theme.CustomViewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,8 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CustomViewComposeTheme {
-            }
+            CanvasTest()
         }
     }
 }
