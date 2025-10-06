@@ -17,15 +17,6 @@ fun CanvasTest(){
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        drawLine(
-            color = Color.White,
-            start = Offset(x = 0f, y = 0f),
-            end = Offset(x = this.size.width, y = this.size.height)
-        )
-        drawCircle(
-            color = Color.White,
-            radius = 100.dp.toPx(),
-            style = Stroke(width = 10.dp.toPx())
-        )
+        oleg()
     }
 }
