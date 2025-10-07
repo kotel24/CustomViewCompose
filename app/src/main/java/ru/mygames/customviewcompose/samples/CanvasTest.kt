@@ -1,8 +1,9 @@
 package ru.mygames.customviewcompose.samples
 
-import android.R
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,30 +25,10 @@ fun CanvasTest(){
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.Cyan, Color.Magenta),
-                    start = Offset(0.dp.toPx(), 100.dp.toPx()),
-                    tileMode = TileMode.Mirror
-                )
+                color = Color.White
             )
     ) {
-        drawPath(
-            path = Path().apply {
-                moveTo(x = center.x, y = 100.dp.toPx())
-                lineTo(x = center.x + 25.dp.toPx(), 150.dp.toPx())
-                lineTo(x = center.x + 75.dp.toPx(), 150.dp.toPx())
-                lineTo(x = center.x + 45.dp.toPx(), 200.dp.toPx())
-                lineTo(x = center.x + 60.dp.toPx(), 250.dp.toPx())
-                lineTo(x = center.x, 220.dp.toPx())
-                lineTo(x = center.x - 60.dp.toPx(), 250.dp.toPx())
-                lineTo(x = center.x - 45.dp.toPx(), 200.dp.toPx())
-                lineTo(x = center.x - 75.dp.toPx(), 150.dp.toPx())
-                lineTo(x = center.x - 25.dp.toPx(), 150.dp.toPx())
-                lineTo(x = center.x, 100.dp.toPx())
-            },
-            color = Color.White,
-            style = Fill
-        )
+
     }
 }
 @Composable
