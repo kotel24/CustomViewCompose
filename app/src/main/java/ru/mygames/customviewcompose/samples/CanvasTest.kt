@@ -2,6 +2,7 @@ package ru.mygames.customviewcompose.samples
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -30,8 +31,10 @@ fun CanvasTest(){
                 color = Color.White
             )
             .pointerInput(key1 = Unit){
-                detectTapGestures {
-                    state.add(it)
+                detectDragGestures { change, dragAmount ->
+                    change.historical.forEach { h -> state.add(h.position) }
+                    state.add(change.position)
+                    change.consume()
                 }
             }
     ) {
@@ -39,7 +42,7 @@ fun CanvasTest(){
         for (o in state.indices) {
             if (o == 0) {
                 path.moveTo(state[o].x, state[o].y)
-                drawCircle(brush = Brush.linearGradient(colors = listOf(Color.Magenta, Color.Cyan)), center = state[o], radius = 2.dp.toPx())
+                //drawCircle(brush = Brush.linearGradient(colors = listOf(Color.Magenta, Color.Cyan)), center = state[o], radius = 2.dp.toPx())
             }
             else path.lineTo(state[o].x, state[o].y)
         }
