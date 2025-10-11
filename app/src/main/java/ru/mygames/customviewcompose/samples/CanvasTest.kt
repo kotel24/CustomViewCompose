@@ -20,10 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+data class Point(
+    val offset: Offset,
+    val isStartedPosition: Boolean
+)
 @Preview
 @Composable
 fun CanvasTest(){
-    val state = remember { mutableStateListOf<Offset>() }
+    val state = remember { mutableStateListOf<Point>() }
     Canvas(
         modifier = Modifier
             .fillMaxSize()
@@ -31,20 +35,23 @@ fun CanvasTest(){
                 color = Color.White
             )
             .pointerInput(key1 = Unit){
-                detectDragGestures { change, dragAmount ->
-                    change.historical.forEach { h -> state.add(h.position) }
-                    state.add(change.position)
-                    change.consume()
-                }
+                detectDragGestures (
+                    onDragStart = {it -> state.add(Point(it, true))},
+                    onDrag = { change, dragAmount ->
+                        change.historical.forEach { h -> state.add(Point(h.position, false))}
+                        state.add(Point(change.position, false))
+                        change.consume()
+                    }
+                )
             }
     ) {
         val path = Path()
-        for (o in state.indices) {
-            if (o == 0) {
-                path.moveTo(state[o].x, state[o].y)
+        state.forEach {
+            if (it.isStartedPosition) {
+                path.moveTo(it.offset.x, it.offset.y)
                 //drawCircle(brush = Brush.linearGradient(colors = listOf(Color.Magenta, Color.Cyan)), center = state[o], radius = 2.dp.toPx())
             }
-            else path.lineTo(state[o].x, state[o].y)
+            else path.lineTo(it.offset.x, it.offset.y)
         }
         drawPath(path = path, brush = Brush.linearGradient(colors = listOf(Color.Magenta, Color.Cyan)), style = Stroke(width = 2.dp.toPx()))
     }
